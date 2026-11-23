@@ -11,7 +11,7 @@
 
 1階の[KOFUNE SAKE BREWERY](https://www.instagram.com/kofune.sake)のSAKEをイベント内でご提供することが可能です。
 
-最新のSAKEのメニューは[こちら](https://canva.link/18nberdmtf8yhug)をご確認ください。
+最新のSAKEのメニューは[こちら](https://mu62.github.io/kofune-pub-order/)をご確認ください。
 
 ## ケータリング by W KITCHEN
 
