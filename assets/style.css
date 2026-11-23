@@ -64,5 +64,5 @@ footer{border-top:1px solid var(--line);color:var(--muted);font-size:.8rem;text-
 .catnav a::after{content:" ↓";font-weight:400;opacity:.8}
 .catnav a:hover{background:#5a4838}
 .catnav a:active{transform:translateY(2px);box-shadow:none}
-h2[id]{scroll-margin-top:76px}
+h2[id]{scroll-margin-top:104px}
 html{scroll-behavior:smooth}
