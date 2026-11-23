@@ -57,3 +57,10 @@ footer{border-top:1px solid var(--line);color:var(--muted);font-size:.8rem;text-
 .lb-cap{color:#eee;font-size:.9rem;margin-top:.8em}
 .lb-x{position:absolute;top:10px;right:14px;background:none;border:0;color:#fff;font-size:34px;cursor:pointer}
 .lb .gal-btn{top:50%}.lb-prev{left:8px}.lb-next{right:8px}
+
+/* category nav */
+.catnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 1.2em}
+.catnav a{background:var(--panel);color:var(--ink);text-decoration:none;border-radius:999px;padding:.3em 1.1em;font-size:.9rem;border:1px solid transparent}
+.catnav a:hover{border-color:var(--accent)}
+h2[id]{scroll-margin-top:70px}
+html{scroll-behavior:smooth}

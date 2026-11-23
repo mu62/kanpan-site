@@ -104,6 +104,21 @@ document.querySelectorAll('.gal').forEach(function(g){
 })();
 </script>"""
 
+# h2（カテゴリ）への目次を冒頭に出すページ
+CATEGORY_NAV = {"equipment"}
+
+def add_category_nav(body):
+    n = [0]
+    def h2(m):
+        n[0] += 1
+        return f'<h2 id="cat-{n[0]}">{m.group(1)}</h2>'
+    body = re.sub(r"<h2>(.*?)</h2>", h2, body)
+    links = "".join(
+        f'<a href="#cat-{i}">{re.sub("<.*?>", "", t)}</a>'
+        for i, t in enumerate(re.findall(r'<h2 id="cat-\d+">(.*?)</h2>', body), 1))
+    nav = f'<nav class="catnav" aria-label="カテゴリ">{links}</nav>'
+    return body.replace("</h1>", "</h1>\n" + nav, 1)
+
 def render(slug, label):
     if slug == "gallery":
         body = gallery_body()
@@ -118,6 +133,8 @@ def render(slug, label):
         missing.append(f"{slug}: {src}")
         return ""
     body = re.sub(r'<img[^>]*?src="(img/[^"]+)"[^>]*?>', chk, body)
+    if slug in CATEGORY_NAV:
+        body = add_category_nav(body)
     h1 = re.search(r"<h1>(.*?)</h1>", body)
     title = html.unescape(re.sub("<.*?>", "", h1.group(1))) if h1 else label
     nav = "".join(
