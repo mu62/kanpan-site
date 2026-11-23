@@ -111,6 +111,13 @@ document.querySelectorAll('.gal').forEach(function(g){
 # h2（カテゴリ）への目次を冒頭に出すページ
 CATEGORY_NAV = {"equipment"}
 
+TOP_BTN = """<a class="to-toc" href="#toc" hidden>↑ 目次へ</a>
+<script>
+(function(){var b=document.querySelector('.to-toc'),t=document.getElementById('toc');
+function f(){b.hidden=t.getBoundingClientRect().bottom>0}
+addEventListener('scroll',f,{passive:true});f();})();
+</script>"""
+
 def add_category_nav(body):
     """h2(カテゴリ)ごとに、配下のh3(備品)へのリンク一覧を冒頭に出す。「参考」で始まる見出しは除く。"""
     parts = re.split(r"(<h[23]>.*?</h[23]>)", body)
@@ -136,8 +143,8 @@ def add_category_nav(body):
         f'<div class="toc-group"><a class="toc-cat" href="#{cid}">{ct}</a><div class="toc-items">'
         + "".join(f'<a href="#{iid}">{t}</a>' for iid, t in items) + "</div></div>"
         for cid, ct, items in groups)
-    nav = f'<nav class="toc" aria-label="備品目次">{toc}</nav>'
-    return "".join(parts).replace("</h1>", "</h1>\n" + nav, 1)
+    nav = f'<nav class="toc" id="toc" aria-label="備品目次">{toc}</nav>'
+    return "".join(parts).replace("</h1>", "</h1>\n" + nav, 1) + TOP_BTN
 
 def render(slug, label):
     if slug == "gallery":
