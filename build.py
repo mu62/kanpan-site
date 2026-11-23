@@ -36,7 +36,7 @@ TEMPLATE = """<!doctype html>
 <title>{title}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@600&display=swap&text=KANPAN">
 <link rel="icon" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/style.css"></head>
+<link rel="stylesheet" href="assets/style.css?v={v}"></head>
 <body>
 <header class="site"><div class="in">
 <a class="brand" href="index.html"><img src="assets/img/logo.png" alt="" width="32" height="32"><span>{site}</span></a>
@@ -47,6 +47,10 @@ TEMPLATE = """<!doctype html>
 <footer>{footer}</footer>
 </body></html>
 """
+
+import hashlib
+# CSS更新がブラウザのキャッシュで古いまま残らないよう、内容のハッシュをURLに付ける
+CSS_VER = hashlib.md5((ROOT / "assets" / "style.css").read_bytes()).hexdigest()[:8]
 
 missing = []
 
@@ -145,7 +149,7 @@ def render(slug, label):
     body = body.replace('src="img/', 'src="assets/img/')
     return TEMPLATE.format(
         title=f"{title} | {SITE_NAME}", site=SITE_NAME, nav=nav, body=body,
-        footer=FOOTER, robots="noindex")  # 公開時は index,follow に変更
+        footer=FOOTER, robots="noindex", v=CSS_VER)  # 公開時は index,follow に変更
 
 def main():
     if OUT.exists():
