@@ -58,11 +58,14 @@ footer{border-top:1px solid var(--line);color:var(--muted);font-size:.8rem;text-
 .lb-x{position:absolute;top:10px;right:14px;background:none;border:0;color:#fff;font-size:34px;cursor:pointer}
 .lb .gal-btn{top:50%}.lb-prev{left:8px}.lb-next{right:8px}
 
-/* category nav */
-.catnav{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 1.6em}
-.catnav a{flex:1 1 0;min-width:96px;text-align:center;background:var(--accent);color:#fff;text-decoration:none;border-radius:8px;padding:.75em 1em;font-size:1rem;font-weight:700;line-height:1.3;box-shadow:0 2px 0 rgba(0,0,0,.18);transition:transform .1s,background .15s}
-.catnav a::after{content:" ↓";font-weight:400;opacity:.8}
-.catnav a:hover{background:#5a4838}
-.catnav a:active{transform:translateY(2px);box-shadow:none}
-h2[id]{scroll-margin-top:104px}
+/* equipment toc */
+.toc{background:var(--panel);border-radius:8px;padding:.9em 1.1em;margin:0 0 1.6em}
+.toc-group+.toc-group{margin-top:.9em;padding-top:.8em;border-top:1px solid var(--line)}
+.toc-cat{display:inline-block;font-weight:700;color:var(--ink);text-decoration:none;margin-bottom:.35em}
+.toc-cat::after{content:" ↓";font-weight:400;color:var(--muted)}
+.toc-items{display:flex;flex-wrap:wrap;gap:6px 8px}
+.toc-items a{background:var(--bg);color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:.2em .85em;font-size:.88rem;line-height:1.6}
+.toc-items a:hover{border-color:var(--accent);background:#fff}
+.toc-items .tag{margin-left:.3em;font-size:.65rem}
+h2[id],h3[id]{scroll-margin-top:96px}
 html{scroll-behavior:smooth}

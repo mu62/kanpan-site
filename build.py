@@ -112,16 +112,32 @@ document.querySelectorAll('.gal').forEach(function(g){
 CATEGORY_NAV = {"equipment"}
 
 def add_category_nav(body):
-    n = [0]
-    def h2(m):
-        n[0] += 1
-        return f'<h2 id="cat-{n[0]}">{m.group(1)}</h2>'
-    body = re.sub(r"<h2>(.*?)</h2>", h2, body)
-    links = "".join(
-        f'<a href="#cat-{i}">{re.sub("<.*?>", "", t)}</a>'
-        for i, t in enumerate(re.findall(r'<h2 id="cat-\d+">(.*?)</h2>', body), 1))
-    nav = f'<nav class="catnav" aria-label="カテゴリ">{links}</nav>'
-    return body.replace("</h1>", "</h1>\n" + nav, 1)
+    """h2(カテゴリ)ごとに、配下のh3(備品)へのリンク一覧を冒頭に出す。「参考」で始まる見出しは除く。"""
+    parts = re.split(r"(<h[23]>.*?</h[23]>)", body)
+    n2 = n3 = 0
+    groups = []  # [(id, title, [(id, label_html)])]
+    for k, p in enumerate(parts):
+        m = re.fullmatch(r"<h([23])>(.*?)</h[23]>", p)
+        if not m:
+            continue
+        if m.group(1) == "2":
+            n2 += 1
+            parts[k] = f'<h2 id="cat-{n2}">{m.group(2)}</h2>'
+            groups.append((f"cat-{n2}", re.sub("<.*?>", "", m.group(2)), []))
+        else:
+            n3 += 1
+            parts[k] = f'<h3 id="item-{n3}">{m.group(2)}</h3>'
+            title = re.sub("<.*?>", "", m.group(2)).strip()
+            if groups and not title.startswith("参考"):
+                paid = ' <span class="tag">有料</span>' if "有料" in title else ""
+                label = re.sub(r"\s*有料$", "", title)
+                groups[-1][2].append((f"item-{n3}", label + paid))
+    toc = "".join(
+        f'<div class="toc-group"><a class="toc-cat" href="#{cid}">{ct}</a><div class="toc-items">'
+        + "".join(f'<a href="#{iid}">{t}</a>' for iid, t in items) + "</div></div>"
+        for cid, ct, items in groups)
+    nav = f'<nav class="toc" aria-label="備品目次">{toc}</nav>'
+    return "".join(parts).replace("</h1>", "</h1>\n" + nav, 1)
 
 def render(slug, label):
     if slug == "gallery":
