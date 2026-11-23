@@ -12,6 +12,11 @@
 - `build.py` … `content/` → `dist/` に静的HTMLを生成（`python3 build.py`）。ページの追加・並び替えは `PAGES` を編集
 - `docs/` … 生成物（GitHub Pagesの公開対象）。手で編集しない。**変更したら必ず `python3 build.py` を実行し、`docs/` ごとコミット・pushする**（pushで公開が更新される）
 
+## 写真ギャラリー
+- `content/gallery.json` にDriveのファイルID・キャプション・セクションを列挙。画像はDriveから直接表示（データの保存先はDriveのまま）
+- Driveフォルダ（https://drive.google.com/drive/folders/1KHEkE5Mve5kKecrOWf2TB_YpSPT9YBL8）は「リンクを知っている全員」共有が前提。共有を外すとサイト上で表示されなくなる
+- 写真を追加・差し替え・削除したら、Drive MCPでフォルダ内を一覧して `gallery.json` を更新し、ビルド・pushする（ロゴ画像 KANPAN_Logo.png はギャラリーに入れない）
+
 ## 編集ルール
 - 文言・料金・条件の変更は `content/*.md` を直接編集し、`python3 build.py` を実行する
 - 同じ内容が複数ページにある（キャンセルポリシーは「ご予約前のご案内」と「利用規約」、利用時間・禁止事項・喫煙は「ご案内」「ご利用ガイド」）。片方を変えたら他方も確認して揃える

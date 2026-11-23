@@ -31,9 +31,9 @@ KOFUNEの2階にある、コンクリートの質感を活かしたレンタル�
 <span>KOFUNEのSAKE、W KITCHENのケータリング</span>
 </a>
 
-<a class="card" href="https://drive.google.com/drive/folders/1KHEkE5Mve5kKecrOWf2TB_YpSPT9YBL8?usp=sharing" rel="noopener">
+<a class="card" href="gallery.html">
 <strong>写真ギャラリー</strong>
-<span>Googleドライブで開きます</span>
+<span>スペース・ご利用事例・搬入経路の写真</span>
 </a>
 
 </div>

@@ -5,7 +5,7 @@ Usage: python3 build.py
 - 画像は assets/img/ に置く。ファイルが無い画像は表示せず、末尾に一覧を出力する。
 - ページの追加・並び替えは下の PAGES を編集する。
 """
-import re, shutil, html
+import re, shutil, html, json
 from pathlib import Path
 import markdown
 
@@ -23,12 +23,11 @@ PAGES = [
     ("terms", "利用規約"),
     ("equipment", "貸出備品"),
     ("food", "フードオプション"),
+    ("gallery", "写真ギャラリー"),
 ]
 
 # ナビに並べる外部リンク (表示名, URL)
-EXTERNAL = [
-    ("写真ギャラリー", "https://drive.google.com/drive/folders/1KHEkE5Mve5kKecrOWf2TB_YpSPT9YBL8?usp=sharing"),
-]
+EXTERNAL = []
 
 TEMPLATE = """<!doctype html>
 <html lang="ja"><head><meta charset="utf-8">
@@ -51,9 +50,66 @@ TEMPLATE = """<!doctype html>
 
 missing = []
 
+def gallery_body():
+    """content/gallery.json (DriveのファイルID一覧) から横スクロールギャラリーを生成。
+    画像はDriveから直接読み込む（フォルダが「リンクを知っている全員」共有であること）。"""
+    g = json.loads((SRC / "gallery.json").read_text(encoding="utf-8"))
+    thumb = lambda i, w: f"https://drive.google.com/thumbnail?id={i}&sz=w{w}"
+    out = ["<h1>写真ギャラリー</h1>", f"<p>{html.escape(g['intro'])}</p>"]
+    for sec in g["sections"]:
+        out.append(f"<h2>{html.escape(sec['title'])}</h2>")
+        out.append('<div class="gal"><button class="gal-btn prev" aria-label="前へ">‹</button>'
+                   '<div class="gal-track">')
+        for p in sec["photos"]:
+            cap = html.escape(p["caption"])
+            out.append(
+                f'<figure><a href="{thumb(p["id"], 2000)}" data-cap="{cap}">'
+                f'<img src="{thumb(p["id"], 800)}" alt="{cap}" loading="lazy"></a>'
+                f'<figcaption>{cap}</figcaption></figure>')
+        out.append('</div><button class="gal-btn next" aria-label="次へ">›</button></div>')
+    out.append(f'<p class="gal-more"><a href="{g["drive_folder"]}" target="_blank" rel="noopener">'
+               'Googleドライブで全ての写真を開く ↗</a></p>')
+    out.append(GALLERY_JS)
+    return "\n".join(out)
+
+GALLERY_JS = """<div class="lb" hidden><button class="lb-x" aria-label="閉じる">×</button>
+<button class="gal-btn lb-prev" aria-label="前へ">‹</button><img alt=""><div class="lb-cap"></div>
+<button class="gal-btn lb-next" aria-label="次へ">›</button></div>
+<script>
+document.querySelectorAll('.gal').forEach(function(g){
+  var t=g.querySelector('.gal-track');
+  g.querySelector('.prev').onclick=function(){t.scrollBy({left:-t.clientWidth*.8,behavior:'smooth'})};
+  g.querySelector('.next').onclick=function(){t.scrollBy({left:t.clientWidth*.8,behavior:'smooth'})};
+});
+(function(){
+  var lb=document.querySelector('.lb'),im=lb.querySelector('img'),cp=lb.querySelector('.lb-cap');
+  var set=[],i=0;
+  function show(n){i=(n+set.length)%set.length;im.src=set[i].href;cp.textContent=set[i].dataset.cap}
+  document.querySelectorAll('.gal-track a').forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      set=[].slice.call(a.closest('.gal-track').querySelectorAll('a'));
+      lb.hidden=false;show(set.indexOf(a));
+    });
+  });
+  lb.querySelector('.lb-x').onclick=function(){lb.hidden=true;im.src=''};
+  lb.querySelector('.lb-prev').onclick=function(){show(i-1)};
+  lb.querySelector('.lb-next').onclick=function(){show(i+1)};
+  document.addEventListener('keydown',function(e){
+    if(lb.hidden)return;
+    if(e.key==='Escape')lb.querySelector('.lb-x').click();
+    if(e.key==='ArrowLeft')show(i-1);
+    if(e.key==='ArrowRight')show(i+1);
+  });
+})();
+</script>"""
+
 def render(slug, label):
-    text = (SRC / f"{slug}.md").read_text(encoding="utf-8")
-    body = markdown.markdown(text, extensions=["extra", "sane_lists", "md_in_html"])
+    if slug == "gallery":
+        body = gallery_body()
+    else:
+        text = (SRC / f"{slug}.md").read_text(encoding="utf-8")
+        body = markdown.markdown(text, extensions=["extra", "sane_lists", "md_in_html"])
     # 画像ファイルが無ければ <img> を外す
     def chk(m):
         src = m.group(1)

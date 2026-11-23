@@ -1,0 +1,29 @@
+{
+  "drive_folder": "https://drive.google.com/drive/folders/1KHEkE5Mve5kKecrOWf2TB_YpSPT9YBL8?usp=sharing",
+  "intro": "左右にスワイプ（PCは矢印ボタン）で写真をご覧いただけます。タップで拡大表示します。",
+  "sections": [
+    {"title": "スペース", "photos": [
+      {"id": "1xdbqpiP0lhcGsTnzlJYzdsoRj5Z6t5O0", "caption": "建物外観"},
+      {"id": "1IPfZn4taj1zbt73wC304UV8E2W1sgwKq", "caption": "内観1"},
+      {"id": "1oKHqWB2fzen7YGyEgPApp3NIURvIbgzC", "caption": "内観2"},
+      {"id": "1L8oVKGlw-A38O8IcGyrpue51RGzTfX3E", "caption": "内観3"},
+      {"id": "1zm9k5efCCYIS98kVnPHnDp8QQxS5e6tA", "caption": "東側吹き抜け階段"},
+      {"id": "1e6L0E7oCXIJTPoe2pCOuTGVxNXj8EHGA", "caption": "階段横スペース"},
+      {"id": "1VopK48NPm2vdEufZczwb7b6ifGxZIoSu", "caption": "東側道路に面した大きな窓"}
+    ]},
+    {"title": "ご利用事例", "photos": [
+      {"id": "1LbvVp5wWHQUSUtzf-G8__LSuNmCpbtew", "caption": "DJイベント"},
+      {"id": "1PZqpOvnbdG72nN35Q6cNp6723B97UMUr", "caption": "音楽イベント"},
+      {"id": "11ko9UFn5m7zdPvYKOrX8ichPwRezV9Cz", "caption": "アーティスト写真撮影"},
+      {"id": "18-hYsPOrZV6YQnOS-xGOLTVkRCFH4Lqs", "caption": "アパレルポップアップ"},
+      {"id": "1gPFIb8u7F4iT1j_qYEGNndCeovJHMkxV", "caption": "キッズアパレルポップアップ"},
+      {"id": "1nrCZHzqCmpKwaXQ5zgsJL3NIVrHHX1aU", "caption": "シューズメーカー展示会"}
+    ]},
+    {"title": "平面図・搬入経路", "photos": [
+      {"id": "1Yp0CM_s6QUApdQg1S_Z2L0HRXtKQIHoO", "caption": "KANPAN平面図"},
+      {"id": "1LwJ3Gll7blS69fuZ7vrsHxTrs08xTF4M", "caption": "搬入経路①エントランス"},
+      {"id": "1LxprZ6gofz72j065kisMO-gmXsNMaqbL", "caption": "搬入経路②階段幅"},
+      {"id": "1WnFSndtHKqX_D8pSwv0_XcBHZpZbKXGE", "caption": "搬入経路③非常灯までの高さ"}
+    ]}
+  ]
+}
