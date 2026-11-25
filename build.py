@@ -151,6 +151,8 @@ def render(slug, label):
         body = gallery_body()
     else:
         text = (SRC / f"{slug}.md").read_text(encoding="utf-8")
+        # python-markdown は入れ子リストに半角4スペースが必要。原稿の2スペースインデントを4スペースに補正する
+        text = re.sub(r"^((?:  )+)(?=(?:[-*+]|\d+\.) )", lambda m: m.group(1) * 2, text, flags=re.M)
         body = markdown.markdown(text, extensions=["extra", "sane_lists", "md_in_html"])
     # 画像ファイルが無ければ <img> を外す
     def chk(m):
