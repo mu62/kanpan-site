@@ -71,3 +71,11 @@ html{scroll-behavior:smooth}
 .to-toc{position:fixed;right:16px;bottom:18px;z-index:10;background:var(--accent);color:#fff;text-decoration:none;font-size:.9rem;font-weight:700;border-radius:999px;padding:.6em 1.1em;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 .to-toc[hidden]{display:none}
 #toc{scroll-margin-top:70px}
+
+.lead{font-size:1.02rem;color:var(--muted);margin:0 0 1em}
+.top-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:1.2em 0 .4em}
+.top-photos a{display:block}
+.top-photos img{width:100%;aspect-ratio:4/3;object-fit:cover;margin:0}
+.more{text-align:right;font-size:.9rem;margin:.2em 0 0}
+table.facts th{width:8.5em;background:var(--panel);white-space:nowrap;vertical-align:top}
+@media(max-width:480px){table.facts th{width:6.5em;white-space:normal}}
